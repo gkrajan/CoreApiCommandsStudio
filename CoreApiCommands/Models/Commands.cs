@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoreApiCommands.Models
 {
-    public class Commands
+    public class Command
     {
         [Key]
         [Required]

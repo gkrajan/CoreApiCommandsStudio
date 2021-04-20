@@ -1,3 +1,4 @@
+using CoreApiCommands.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +18,7 @@ namespace CoreApiCommands
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<ICommandAPIRepo, MockCommandAPIRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

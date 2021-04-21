@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Npgsql;
+using AutoMapper;
 
 namespace CoreApiCommands
 {
@@ -27,6 +28,7 @@ namespace CoreApiCommands
         }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             var builder = new NpgsqlConnectionStringBuilder();
             builder.ConnectionString = configuration.GetConnectionString("PostgreSqlConnection");
             builder.Username = configuration["UserID"];

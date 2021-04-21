@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Npgsql;
 
 namespace CoreApiCommands
 {
@@ -26,10 +27,14 @@ namespace CoreApiCommands
         }
         public void ConfigureServices(IServiceCollection services)
         {
+            var builder = new NpgsqlConnectionStringBuilder();
+            builder.ConnectionString = configuration.GetConnectionString("PostgreSqlConnection");
+            builder.Username = configuration["UserID"];
+            builder.Password = configuration["Password"];
             services.AddControllers();
             //services.AddScoped<ICommandAPIRepo, MockCommandAPIRepo>();
             services.AddScoped<ICommandAPIRepo, SqlCommandAPIRepo>();
-            services.AddDbContext<CommandContext>(options=>options.UseNpgsql(configuration.GetConnectionString("PostgreSqlConnection")));
+            services.AddDbContext<CommandContext>(options=>options.UseNpgsql(builder.ConnectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

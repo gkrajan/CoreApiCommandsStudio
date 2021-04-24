@@ -16,12 +16,20 @@ namespace CoreApiCommands.Data
         }
         public void CreateCommand(Command cmd)
         {
-            throw new NotImplementedException();
+            if (cmd == null)
+            {
+                throw new ArgumentNullException(nameof(cmd));
+            }
+            contextDb.CommandItems.Add(cmd);
         }
 
         public void DeleteComman(Command cmd)
         {
-            throw new NotImplementedException();
+            if (cmd==null)
+            {
+                throw new NotImplementedException();
+            }
+            contextDb.CommandItems.Remove(cmd);           
         }
 
         public IEnumerable<Command> GetAllCommands()
@@ -36,12 +44,12 @@ namespace CoreApiCommands.Data
 
         public bool SaveChanges()
         {
-            throw new NotImplementedException();
+            return (contextDb.SaveChanges()>=0);
         }
 
         public void UpdateCommand(Command cmd)
         {
-            throw new NotImplementedException();
+          
         }
     }
 }

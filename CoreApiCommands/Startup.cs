@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Npgsql;
 using AutoMapper;
+using Newtonsoft.Json.Serialization;
 
 namespace CoreApiCommands
 {
@@ -28,12 +29,13 @@ namespace CoreApiCommands
         }
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             var builder = new NpgsqlConnectionStringBuilder();
             builder.ConnectionString = configuration.GetConnectionString("PostgreSqlConnection");
             builder.Username = configuration["UserID"];
             builder.Password = configuration["Password"];
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(s=>{ s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });
             //services.AddScoped<ICommandAPIRepo, MockCommandAPIRepo>();
             services.AddScoped<ICommandAPIRepo, SqlCommandAPIRepo>();
             services.AddDbContext<CommandContext>(options=>options.UseNpgsql(builder.ConnectionString));
